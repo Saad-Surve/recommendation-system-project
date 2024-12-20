@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}TailorReads - Dashboard{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- User Welcome Card - Sticky -->
+    <div class="sticky top-0 z-10 bg-[#f0f0f0] pt-4 pb-4">
+        <div class="neo-brutalist-white">
+            <div class="px-6 py-4">
+                <h2 class="text-3xl font-bold text-black">Welcome, {{ user.username }}!</h2>
+                <p class="text-lg font-bold text-gray-700">{{ user.email }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-4">
+        <!-- Left Column: Scrollable Recommended & Trending -->
+        <div class="lg:col-span-2 space-y-8 max-h-[calc(100vh-200px)] overflow-y-auto pr-4">
+            <!-- Recommended For You -->
+            {% if recommended_articles %}
+            <div class="neo-brutalist-white">
+                <div class="px-6 py-4">
+                    <h3 class="text-2xl font-bold text-black mb-6 flex items-center">
+                        <svg class="h-8 w-8 mr-2 text-[#ff90e8]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                        </svg>
+                        Recommended For You
+                    </h3>
+                    <div class="space-y-6">
+                        {% for article in recommended_articles %}
+                            {% include "components/article_card.html" %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Trending Now -->
+            {% if trending_articles %}
+            <div class="neo-brutalist-white">
+                <div class="px-6 py-4">
+                    <h3 class="text-2xl font-bold text-black mb-6 flex items-center">
+                        <svg class="h-8 w-8 mr-2 text-[#ff6b6b]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                        </svg>
+                        Trending Now
+                    </h3>
+                    <div class="space-y-6">
+                        {% for article in trending_articles %}
+                            {% include "components/article_card.html" %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Right Column: Stats & Interests - Sticky -->
+        <div class="space-y-8 sticky top-4 h-fit">
+            <!-- User Stats -->
+            <div class="neo-brutalist-white">
+                <div class="px-6 py-4">
+                    <h3 class="text-xl font-bold text-black mb-4">Your Activity</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="neo-brutalist-tag bg-[#90cdf4] p-4">
+                            <span class="block text-2xl font-bold text-black">{{ user_stats.views }}</span>
+                            <span class="text-black font-bold">Views</span>
+                        </div>
+                        <div class="neo-brutalist-tag bg-[#9ae6b4] p-4">
+                            <span class="block text-2xl font-bold text-black">{{ user_stats.likes }}</span>
+                            <span class="text-black font-bold">Likes</span>
+                        </div>
+                        <div class="neo-brutalist-tag bg-[#fbd38d] p-4">
+                            <span class="block text-2xl font-bold text-black">{{ user_stats.shares }}</span>
+                            <span class="text-black font-bold">Shares</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Interests -->
+            {% if user_interests %}
+            <div class="neo-brutalist-white">
+                <div class="px-6 py-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-black">Your Interests</h3>
+                        <a href="/edit-interests" class="neo-brutalist-button bg-[#ff90e8] px-3 py-1 font-bold text-black">
+                            Edit
+                        </a>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        {% for interest in user_interests %}
+                        <span class="neo-brutalist-tag px-3 py-1 font-bold text-black">
+                            {{ interest }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

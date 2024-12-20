@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Select Your Interests{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="px-6 py-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Welcome! Select Your Interests</h2>
+            <p class="text-gray-600 mb-8">Choose topics you're interested in to get personalized recommendations.</p>
+            
+            <form method="POST" action="/save-interests" class="space-y-6">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {% for tag in available_tags %}
+                    <div class="relative">
+                        <input type="checkbox" 
+                               id="tag-{{ loop.index }}" 
+                               name="selected_tags" 
+                               value="{{ tag }}"
+                               class="peer hidden">
+                        <label for="tag-{{ loop.index }}"
+                               class="block px-4 py-2 bg-gray-100 text-gray-700 rounded-lg cursor-pointer
+                                      hover:bg-indigo-50 peer-checked:bg-indigo-100 peer-checked:text-indigo-700
+                                      peer-checked:ring-2 peer-checked:ring-indigo-500 transition-all">
+                            {{ tag }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="flex justify-end space-x-4">
+                    <button type="submit"
+                            class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700
+                                   focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Save Interests
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

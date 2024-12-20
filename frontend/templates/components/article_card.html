@@ -1,0 +1,58 @@
+<!-- Create a reusable article card component -->
+<div class="neo-brutalist-card mb-6 p-6">
+    <div class="flex justify-between items-start mb-3">
+        <h4 class="text-xl font-bold text-black">
+            <a href="/articles/{{ article.article_id }}" class="hover:underline">
+                {{ article.title }}
+            </a>
+        </h4>
+        {% if article.boosted %}
+        <span class="neo-brutalist-tag px-3 py-1 font-bold text-black">
+            <svg class="h-4 w-4 inline-block mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            BOOSTED
+        </span>
+        {% endif %}
+    </div>
+    
+    {% if article.text %}
+    <p class="text-black mb-4 line-clamp-2">
+        {{ article.text[:150] }}{% if article.text|length > 150 %}...{% endif %}
+    </p>
+    {% endif %}
+    
+    <div class="flex flex-wrap gap-2 mb-4">
+        {% for tag in article.tags %}
+        <span class="neo-brutalist-tag px-3 py-1 font-bold text-black">
+            {{ tag }}
+        </span>
+        {% endfor %}
+    </div>
+    
+    <div class="flex justify-between items-center">
+        <div class="flex space-x-2">
+            <a href="/articles/{{ article.article_id }}" 
+               class="neo-brutalist-button bg-[#90cdf4] px-4 py-2 font-bold text-black"
+               onclick="recordView({{ article.article_id }})">
+                View
+            </a>
+            <button onclick="handleInteraction({{ article.article_id }}, 'like')"
+                    id="like-{{ article.article_id }}"
+                    class="neo-brutalist-button bg-[#9ae6b4] px-4 py-2 font-bold text-black">
+                Like
+            </button>
+            <button onclick="handleShare({{ article.article_id }}, '{{ article.title }}')"
+                    id="share-{{ article.article_id }}"
+                    class="neo-brutalist-button bg-[#fbd38d] px-4 py-2 font-bold text-black">
+                Share
+            </button>
+        </div>
+        {% if article.interaction_counts %}
+        <div class="neo-brutalist-tag px-3 py-1 font-bold text-black">
+            {{ article.interaction_counts.views }} views
+        </div>
+        {% endif %}
+    </div>
+    <div id="status-{{ article.article_id }}" class="mt-2 text-sm font-bold"></div>
+</div> 

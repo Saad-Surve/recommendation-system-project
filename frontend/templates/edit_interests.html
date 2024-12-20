@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Interests{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="neo-brutalist-white">
+        <div class="px-6 py-8">
+            <h2 class="text-3xl font-bold text-black mb-6">Edit Your Interests</h2>
+            <p class="text-lg font-bold text-gray-700 mb-8">Select topics you're interested in to get better recommendations.</p>
+            
+            <form method="POST" action="/save-interests" class="space-y-6">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {% for tag in available_tags %}
+                    <div class="relative">
+                        <input type="checkbox" 
+                               id="tag-{{ loop.index }}" 
+                               name="selected_tags" 
+                               value="{{ tag }}"
+                               {% if tag in user_interests %}checked{% endif %}
+                               class="peer hidden">
+                        <label for="tag-{{ loop.index }}"
+                               class="neo-brutalist-tag block px-4 py-2 font-bold text-black cursor-pointer
+                                      hover:transform hover:-translate-y-0.5 transition-transform
+                                      peer-checked:bg-[#ff90e8] peer-checked:transform peer-checked:-translate-y-1">
+                            {{ tag }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="flex justify-end space-x-4 mt-8">
+                    <a href="/profile" 
+                       class="neo-brutalist-button bg-gray-200 px-6 py-3 font-bold text-black">
+                        Cancel
+                    </a>
+                    <button type="submit"
+                            class="neo-brutalist-button bg-[#ff90e8] px-6 py-3 font-bold text-black">
+                        Save Interests
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Search Articles{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Search Form -->
+    <div class="neo-brutalist-white mb-8">
+        <div class="px-6 py-4">
+            <form method="GET" action="/search" class="flex gap-4">
+                <input type="text" 
+                       name="q" 
+                       value="{{ query }}"
+                       placeholder="Search articles..."
+                       class="neo-brutalist-input flex-1 px-4 py-2 text-black font-medium focus:outline-none">
+                <button type="submit"
+                        class="neo-brutalist-button bg-[#ff90e8] px-6 py-2 text-black font-bold flex items-center">
+                    <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    Search
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {% if query %}
+        {% if articles %}
+            <!-- Search Results -->
+            <div class="space-y-6">
+                {% for article in articles %}
+                    {% include "components/article_card.html" %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- No Results -->
+            <div class="neo-brutalist-white">
+                <div class="p-6 text-center">
+                    <p class="text-black font-bold">No articles found matching "{{ query }}".</p>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <!-- Initial State -->
+        <div class="neo-brutalist-white">
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-black mb-4">Popular Tags</h3>
+                <div class="flex flex-wrap gap-2">
+                    {% for tag in popular_tags %}
+                    <a href="/explore?tag={{ tag }}" 
+                       class="neo-brutalist-tag px-3 py-1 font-bold text-black hover:transform hover:-translate-y-0.5 transition-transform">
+                        {{ tag }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

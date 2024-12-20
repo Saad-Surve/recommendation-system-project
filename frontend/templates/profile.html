@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- User Profile Card -->
+    <div class="neo-brutalist-white mb-8">
+        <div class="px-6 py-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-3xl font-bold text-black">{{ user.username }}</h2>
+                <span class="neo-brutalist-tag px-4 py-2 font-bold text-black">{{ user.email }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Stats -->
+    <div class="neo-brutalist-white mb-8">
+        <div class="px-6 py-4">
+            <h3 class="text-2xl font-bold text-black mb-4">Your Activity</h3>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="neo-brutalist-tag p-4 text-center">
+                    <span class="block text-3xl font-bold text-black">{{ user_stats.views }}</span>
+                    <span class="text-black font-bold">Views</span>
+                </div>
+                <div class="neo-brutalist-tag p-4 text-center">
+                    <span class="block text-3xl font-bold text-black">{{ user_stats.likes }}</span>
+                    <span class="text-black font-bold">Likes</span>
+                </div>
+                <div class="neo-brutalist-tag p-4 text-center">
+                    <span class="block text-3xl font-bold text-black">{{ user_stats.shares }}</span>
+                    <span class="text-black font-bold">Shares</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Interests -->
+    <div class="neo-brutalist-white mb-8">
+        <div class="px-6 py-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-black">Your Interests</h3>
+                <a href="/edit-interests" 
+                   class="neo-brutalist-button bg-[#ff90e8] px-4 py-2 font-bold text-black">
+                    Edit Interests
+                </a>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                {% for interest in user_interests %}
+                <span class="neo-brutalist-tag px-3 py-1 font-bold text-black">
+                    {{ interest }}
+                </span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %} 

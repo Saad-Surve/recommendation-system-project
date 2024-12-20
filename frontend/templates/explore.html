@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Explore Articles{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <!-- Tags Section -->
+    <div class="neo-brutalist-white mb-8">
+        <div class="px-6 py-4">
+            <h2 class="text-2xl font-bold text-black mb-4">Browse by Tags</h2>
+            <div class="flex flex-wrap gap-2">
+                {% for tag in popular_tags %}
+                <a href="/explore?tag={{ tag }}" 
+                   class="neo-brutalist-tag px-4 py-2 font-bold text-black hover:transform hover:-translate-y-0.5 transition-transform
+                          {% if current_tag == tag %}ring-[3px] ring-black{% endif %}">
+                    {{ tag }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Articles Section -->
+    <div class="grid grid-cols-1 gap-6">
+        {% if articles %}
+            {% for article in articles %}
+                {% include "components/article_card.html" %}
+            {% endfor %}
+        {% else %}
+            <div class="neo-brutalist-white">
+                <div class="p-6 text-center">
+                    <p class="text-black font-bold">No articles found for this tag.</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Pagination -->
+    {% if total_pages > 1 %}
+    <div class="mt-8 flex justify-center">
+        <div class="flex space-x-2">
+            {% for page in range(1, total_pages + 1) %}
+            <a href="/explore?page={{ page }}{% if current_tag %}&tag={{ current_tag }}{% endif %}"
+               class="neo-brutalist-button px-4 py-2 font-bold text-black {% if page == current_page %}bg-[#ffd700]{% else %}bg-white{% endif %}">
+                {{ page }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %} 

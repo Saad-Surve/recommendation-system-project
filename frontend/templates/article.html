@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="neo-brutalist-white">
+        <div class="px-6 py-8">
+            <!-- Article Header -->
+            <h1 class="text-3xl font-bold text-black mb-4">{{ article.title }}</h1>
+            
+            <!-- Article Metadata -->
+            <div class="flex flex-wrap items-center gap-4 mb-6">
+                <div class="neo-brutalist-tag bg-[#90cdf4] px-4 py-2">
+                    <span class="font-bold text-black">
+                        {{ article.timestamp.split('T')[0] }}
+                    </span>
+                </div>
+                <div class="neo-brutalist-tag bg-[#9ae6b4] px-4 py-2">
+                    <span class="font-bold text-black">
+                        {{ article.authors|join(', ') }}
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 mb-8">
+                {% for tag in article.tags %}
+                <a href="/explore?tag={{ tag }}" 
+                   class="neo-brutalist-tag px-3 py-1 font-bold text-black">
+                    {{ tag }}
+                </a>
+                {% endfor %}
+            </div>
+            
+            <!-- Article Content -->
+            <div class="prose max-w-none mb-8">
+                {% for paragraph in article.text.split('\n') %}
+                    {% if paragraph.strip() %}
+                        <p class="mb-4 text-black text-lg">{{ paragraph }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            
+            <!-- Interaction Buttons -->
+            <div class="flex space-x-4 pt-6 border-t-4 border-black">
+                <button onclick="handleInteraction({{ article.article_id }}, 'like')"
+                        id="like-btn-{{ article.article_id }}"
+                        class="neo-brutalist-button bg-[#9ae6b4] px-6 py-3 font-bold text-black">
+                    Like
+                </button>
+                <button onclick="handleShare({{ article.article_id }}, '{{ article.title }}')"
+                        id="share-{{ article.article_id }}"
+                        class="neo-brutalist-button bg-[#fbd38d] px-6 py-3 font-bold text-black">
+                    Share
+                </button>
+                <button onclick="handleNotInterested({{ article.article_id }})"
+                        id="not-interested-{{ article.article_id }}"
+                        class="neo-brutalist-button bg-[#ff6b6b] px-6 py-3 font-bold text-black">
+                    Not Interested
+                </button>
+            </div>
+            
+            <!-- Status Messages -->
+            <div id="status-{{ article.article_id }}" class="mt-4 text-lg font-bold"></div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

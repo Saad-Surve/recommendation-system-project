@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Debug Status{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+        <div class="px-6 py-4">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">System Status</h2>
+            
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700">Database Counts:</h3>
+                    <p>Articles: {{ debug_data.article_count }}</p>
+                    <p>Users: {{ debug_data.user_count }}</p>
+                    <p>Interactions: {{ debug_data.interaction_count }}</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700">Sample Articles:</h3>
+                    <div class="space-y-2">
+                        {% for article in debug_data.sample_articles %}
+                        <div class="border-b border-gray-200 pb-2">
+                            <p class="font-medium">{{ article.title }}</p>
+                            <div class="flex flex-wrap gap-2">
+                                {% for tag in article.tags %}
+                                <span class="px-2 py-1 bg-indigo-100 text-indigo-800 text-sm rounded-full">
+                                    {{ tag }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

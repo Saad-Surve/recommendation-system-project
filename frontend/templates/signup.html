@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}TailorReads - Sign Up{% endblock %}
+
+{% block content %}
+<div class="min-h-[calc(100vh-180px)] flex items-center justify-center">
+    <div class="neo-brutalist-white w-full max-w-md p-8">
+        <h2 class="text-3xl font-bold text-center text-black mb-8">Create Account</h2>
+        
+        {% if error %}
+        <div class="mb-6 bg-[#ff6b6b] border-2 border-black p-4 text-black font-bold">
+            {{ error }}
+        </div>
+        {% endif %}
+        
+        <form method="POST" action="/signup" class="space-y-6">
+            <div>
+                <label for="username" class="block text-lg font-bold text-black">Username</label>
+                <input type="text" 
+                       id="username" 
+                       name="username" 
+                       required 
+                       class="neo-brutalist-input mt-2 block w-full px-4 py-3 text-black font-medium focus:outline-none">
+            </div>
+
+            <div>
+                <label for="email" class="block text-lg font-bold text-black">Email</label>
+                <input type="email" 
+                       id="email" 
+                       name="email" 
+                       required 
+                       class="neo-brutalist-input mt-2 block w-full px-4 py-3 text-black font-medium focus:outline-none">
+            </div>
+
+            <div>
+                <label for="password" class="block text-lg font-bold text-black">Password</label>
+                <input type="password" 
+                       id="password" 
+                       name="password" 
+                       required 
+                       minlength="8"
+                       class="neo-brutalist-input mt-2 block w-full px-4 py-3 text-black font-medium focus:outline-none">
+                <p class="mt-2 text-black font-medium">Password must be at least 8 characters long</p>
+            </div>
+
+            <button type="submit" 
+                    class="neo-brutalist-button w-full py-3 px-4 bg-[#ff90e8] text-black font-bold text-lg">
+                Sign Up
+            </button>
+        </form>
+
+        <div class="mt-8 text-center">
+            <a href="/" class="text-lg font-bold text-black hover:underline">
+                Already have an account? Sign in
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 
